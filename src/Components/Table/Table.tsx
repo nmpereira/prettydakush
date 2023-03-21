@@ -63,7 +63,7 @@ function Table(): ReactElement {
   return (
     <>
       <StyledTable className="table w-full">
-        <TableHeader keyNames={...keyNames} />
+        <TableHeader keyNames={keyNames} />
 
         <tbody className="overflow-auto">
           {products.map((product, index) => (
@@ -71,8 +71,8 @@ function Table(): ReactElement {
               key={product._id}
               index={index + 1}
               {...product}
-              keyNames={...keyNames}
-              valueNames={...valueNames}
+              keyNames={keyNames}
+              valueNames={valueNames}
               product_key_names={product_key_names}
             />
           ))}
