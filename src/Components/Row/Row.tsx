@@ -5,7 +5,7 @@ import * as dayjs from 'dayjs'
 import * as relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime)
 
-interface IRowProps {
+export interface IRowProps {
   brandname: string;
   company_name: string;
   createdAt: string;
@@ -54,9 +54,7 @@ function RowComponent(props: IRowProps): ReactElement {
               props.promoPriceHistory
             )[Object.entries(props.promoPriceHistory).length - 1];
 
-              if (previous_price!==previous_price_promo){
-                console.log("price and promo price are different")
-              }
+ 
 
             if (valueName === "price") {
               return (
