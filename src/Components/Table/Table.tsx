@@ -9,7 +9,7 @@ function Table(): ReactElement {
   // call api to get data
   const [products, setProducts] = useState<any[]>([]);
   const [limit, setLimit] = useState<number>(50);
-  const [sortBy, setSortBy] = useState<string>("price");
+  const [sortBy, setSortBy] = useState<string>("priceHistoryUpdatedAt");
   const [sortOrder, setSortOrder] = useState<string>("asc");
   const [page, setPage] = useState<number>(1);
   const [metadata, setMetadata] = useState<any>({});

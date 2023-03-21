@@ -51,13 +51,19 @@ function RowComponent(props: IRowProps): ReactElement {
         props.valueNames.map((valueName: string, index: number) => {
          
           if (valueName === "price" || valueName === "promoPrice") {
+
+            const previous_price_array =Object.entries(props.priceHistory).length
             const [previous_date, previous_price] = Object.entries(
               props.priceHistory
-            )[Object.entries(props.priceHistory).length - 1];
+            )[previous_price_array - (previous_price_array===1?1:2)];
 
+
+            const previous_promo_price_array =Object.entries(props.promoPriceHistory).length
+          
+            
             const [previous_date_promo, previous_price_promo] = Object.entries(
               props.promoPriceHistory
-            )[Object.entries(props.promoPriceHistory).length - 1];
+            )[previous_promo_price_array - (previous_promo_price_array===1?1:2)];
 
  
 
