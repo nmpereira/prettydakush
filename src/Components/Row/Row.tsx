@@ -1,8 +1,9 @@
 import { ReactElement, useEffect } from "react";
 import PriceCell from "../Cell/PriceCell";
-import { RowWrapper } from "./Row.styles";
+import { KeyRow, RowWrapper } from "./Row.styles";
 import dayjs from 'dayjs'
 import relativeTime from "dayjs/plugin/relativeTime";
+
 
 dayjs.extend(relativeTime)
 
@@ -31,6 +32,7 @@ export interface IRowProps {
   keyNames: Array<string>;
   valueNames: Array<string>;
   index: number;
+
 }
 
 type IRowWrapperProps = Omit<IRowProps, "promoPriceHistory" | "priceHistory">;
@@ -41,11 +43,13 @@ function RowComponent(props: IRowProps): ReactElement {
 
   return (
     <tr>
-      <RowWrapper>{props.index}</RowWrapper>
+ 
+     
+      <KeyRow>{props.index}</KeyRow>
       {
-        // display the value of the prop that matches the key name
+
         props.valueNames.map((valueName: string, index: number) => {
-          // get the latest price history from the price history object where the key is the date and value is the price. Get the price and the date
+         
           if (valueName === "price" || valueName === "promoPrice") {
             const [previous_date, previous_price] = Object.entries(
               props.priceHistory
@@ -99,9 +103,10 @@ function RowComponent(props: IRowProps): ReactElement {
             <RowWrapper key={index}>
               {props[valueName as keyof IRowWrapperProps] || "N/A"}
             </RowWrapper>
-          );
+          )
         })
       }
+   
     </tr>
   );
 }

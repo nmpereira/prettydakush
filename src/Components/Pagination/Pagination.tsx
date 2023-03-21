@@ -19,7 +19,7 @@ function Pagination(props: IPaginationProps): ReactElement {
 
   const endOffset = itemOffset + page_limit;
 
-  const pageCount = Math.ceil(total_count / page_limit);
+  const pageCount = Math.ceil(total_count / page_limit)||0;
 
   const handlePageClick = (event: { selected: number }) => {
     props.setPage(event.selected + 1);
@@ -43,7 +43,7 @@ function Pagination(props: IPaginationProps): ReactElement {
         nextClassName={"btn"}
         breakClassName={"btn-disabled"}
         breakLinkClassName={"btn-disabled items-center flex"}
-        initialPage={0}
+        // initialPage={0}
       />
     </>
   );

@@ -3,7 +3,7 @@ import { ReactElement, useEffect, useState } from "react";
 import axios from "axios";
 import TableHeader from "../TableHeader/TableHeader";
 import Pagination from "../Pagination/Pagination";
-import { StyledTable } from "./Table.styles";
+import { StyledTable, TablePageWrapper, TableTopSpacer, TableWrapper } from "./Table.styles";
 
 function Table(): ReactElement {
   // call api to get data
@@ -29,7 +29,7 @@ function Table(): ReactElement {
       .then((response) => {
         setProducts(response.data.products);
         setMetadata(response.data.msg);
-     setLoading(false)
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -61,31 +61,48 @@ function Table(): ReactElement {
   const valueNames = Object.values(product_key_names);
 
   return (
-    <>
-      <StyledTable className="table w-full">
-        <TableHeader keyNames={keyNames} />
+    <TablePageWrapper>
+      <TableTopSpacer>
 
-        <tbody className="overflow-auto">
-          {products.map((product, index) => (
-            <RowComponent
-              key={product._id}
-              index={index + 1}
-              {...product}
-              keyNames={keyNames}
-              valueNames={valueNames}
-              product_key_names={product_key_names}
-            />
-          ))}
-        </tbody>
-      </StyledTable>
       <Pagination
         limit={metadata.limit}
         page={metadata.page}
         setPage={setPage}
         total_pages={metadata.total_pages}
         total_products={metadata.sizeBeforeFilter}
-      />
-    </>
+        />
+        </TableTopSpacer>
+      <TableWrapper>
+        <StyledTable className="table w-full">
+          <TableHeader keyNames={keyNames} loading={loading} />
+
+          <tbody className="overflow-auto">
+            {loading ? (
+              <tr className="h-20">
+                <td colSpan={keyNames.length} className="text-center">
+                  <progress className="progress progress-primary w-56"></progress>
+                </td>
+              </tr>
+            ) : (
+              <>
+              
+                {products.map((product, index) => (
+                  <RowComponent
+                    key={product._id}
+                    index={index + 1}
+                    {...product}
+                    keyNames={keyNames}
+                    valueNames={valueNames}
+                    product_key_names={product_key_names}
+                    loading={loading}
+                  />
+                ))}
+              </>
+            )}
+          </tbody>
+        </StyledTable>
+      </TableWrapper>
+    </TablePageWrapper>
   );
 }
 

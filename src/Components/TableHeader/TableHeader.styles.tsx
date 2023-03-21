@@ -6,6 +6,7 @@ export const StyledTableHeader = styled.thead`
         top: 0;
     }
     th:first-child {
-        z-index: 0;
+        z-index: 12;
+
     }
 `;
