@@ -1,10 +1,11 @@
 import RowComponent from "../Row/Row";
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import axios from "axios";
+import TableHeader from "../TableHeader/TableHeader";
 
-function Table() {
+function Table():ReactElement {
   // call api to get data
-  const [products, setProducts] = useState<any[]>([])
+  const [products, setProducts] = useState<any[]>([]);
 
   useEffect(() => {
     getData();
@@ -12,9 +13,9 @@ function Table() {
 
   const getData = async () => {
     // axios get with error handling
-     await axios
+    await axios
 
-      .get("https://data.nmpereira.com/api/products/all?limit=1000")
+      .get("https://data.nmpereira.com/api/products/all?limit=50")
       .then((response) => {
         setProducts(response.data.products);
         // console.log(response.data.products);
@@ -22,40 +23,54 @@ function Table() {
       .catch((error) => {
         console.log(error);
       });
-
-  
   };
 
+  const product_key_names = {
+    // 'ID': "_id",
+    "Company Name": "company_name",
+    "Location ID": "location_id",
+    "Brandname": "brandname",
+    "Variation Name": "variation_name",
+    // "Display Name": "displayname",
+    // "Product ID": "product_id",
+    // "Variation ID": "variationid",
+    "Total Size": "total_size",
+    "Pack Size": "pack_size",
+    "Price": "price",
+    // "Quantity Status": "quantityStatus",
+    "Promo Price": "promoPrice",
+    "Product Name": "productName",
+    // "Price Last Updated": "priceHistoryUpdatedAt",
+    // "Promo Price Last Updated": "promoPriceHistoryUpdatedAt",
+    // "Document Last Updated": "updatedAt",
+    // "Document Created At": "createdAt",
+  };
+
+  const keyNames = Object.keys(product_key_names);
+  const valueNames = Object.values(product_key_names);
+
+
+
   return (
-    <div className="overflow-x-auto">
-      <table className="table w-full">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="border px-4 py-2">Variation Name</th>
-            <th className="border px-4 py-2">Brand Name</th>
-            <th className="border px-4 py-2">Company</th>
-            <th className="border px-4 py-2">Price last updated at</th>
-            <th className="border px-4 py-2">Price</th>
-            <th className="border px-4 py-2">Store #</th>
-            <th className="border px-4 py-2">Display Name</th>
-            <th className="border px-4 py-2">Promo Price</th>
-            <th className="border px-4 py-2">Promo Price last updated at</th>
-            <th className="border px-4 py-2">Quantity Status</th>
-          </tr>
-        </thead>
+    <table className="table w-full">
+      <TableHeader
+            keyNames={...keyNames}
 
+      />
 
-        <tbody>
-            {products.map((product) => 
-            <RowComponent
-                key={product._id}
-                {...product}/>   
-            )}
-
-     
-        </tbody>
-      </table>
-    </div>
+      <tbody className="overflow-auto">
+        {products.map((product, index) => (
+          <RowComponent
+            key={product._id}
+            index={index+1}
+            {...product}
+            keyNames={...keyNames}
+            valueNames={...valueNames}
+            product_key_names={product_key_names}
+          />
+        ))}
+      </tbody>
+    </table>
   );
 }
 

@@ -4,8 +4,9 @@ export const TableWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 100px;
-    max-height: 70vh;
-    overflow: auto;
+    margin: 100px;
+    width: 1200px;
+    max-width: 100%;
     border: 3px solid #000;
+    ;
 `;
