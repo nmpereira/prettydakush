@@ -24,7 +24,6 @@ export const TableTopSpacer = styled.table`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid red;
   height: 200px;
   width: 100%;
 `;
