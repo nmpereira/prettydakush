@@ -3,21 +3,25 @@ import { ReactElement, useEffect, useState } from "react";
 import axios from "axios";
 import TableHeader from "../TableHeader/TableHeader";
 import Pagination from "../Pagination/Pagination";
-import { StyledTable, TablePageWrapper, TableTopSpacer, TableWrapper } from "./Table.styles";
+import {
+  StyledTable,
+  TablePageWrapper,
+  TableTopSpacer,
+  TableWrapper,
+} from "./Table.styles";
 
 function Table(): ReactElement {
-  // call api to get data
   const [products, setProducts] = useState<any[]>([]);
   const [limit, setLimit] = useState<number>(50);
-  const [sortBy, setSortBy] = useState<string>("priceHistoryUpdatedAt");
-  const [sortOrder, setSortOrder] = useState<string>("asc");
+  const [sortBy, setSortBy] = useState<string>("price");
+  const [sortOrder, setSortOrder] = useState<string>("desc");
   const [page, setPage] = useState<number>(1);
   const [metadata, setMetadata] = useState<any>({});
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     getData();
-  }, [page]);
+  }, [page, limit, sortBy, sortOrder]);
 
   const getData = async () => {
     setLoading(true);
@@ -63,18 +67,25 @@ function Table(): ReactElement {
   return (
     <TablePageWrapper>
       <TableTopSpacer>
-
-      <Pagination
-        limit={metadata.limit}
-        page={metadata.page}
-        setPage={setPage}
-        total_pages={metadata.total_pages}
-        total_products={metadata.sizeBeforeFilter}
+        <Pagination
+          limit={metadata.limit}
+          page={metadata.page}
+          setPage={setPage}
+          total_pages={metadata.total_pages}
+          total_products={metadata.sizeBeforeFilter}
         />
-        </TableTopSpacer>
+      </TableTopSpacer>
       <TableWrapper>
         <StyledTable className="table w-full">
-          <TableHeader keyNames={keyNames} loading={loading} />
+          <TableHeader
+            keyNames={keyNames}
+            loading={loading}
+            setSortBy={setSortBy}
+            setSortOrder={setSortOrder}
+            sortBy={sortBy}
+            sortOrder={sortOrder}
+            product_key_names={product_key_names}
+          />
 
           <tbody className="overflow-auto">
             {loading ? (
@@ -85,7 +96,6 @@ function Table(): ReactElement {
               </tr>
             ) : (
               <>
-              
                 {products.map((product, index) => (
                   <RowComponent
                     key={product._id}

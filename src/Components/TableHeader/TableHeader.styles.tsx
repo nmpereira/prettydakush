@@ -10,3 +10,9 @@ export const StyledTableHeader = styled.thead`
 
     }
 `;
+
+export const HeaderKeyWrapper = styled.div`
+    display: flex;
+    align-items: center;
+   
+`
