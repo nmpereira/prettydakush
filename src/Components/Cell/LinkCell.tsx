@@ -9,7 +9,7 @@ interface ILinkCellProps {
 }
 
 function LinkCell(props:ILinkCellProps) {
-    console.log(props);
+
  
     return (
 
