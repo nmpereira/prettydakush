@@ -20,10 +20,12 @@ function Table(): ReactElement {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
+
     getData();
   }, [page, limit, sortBy, sortOrder]);
 
   const getData = async () => {
+
     setLoading(true);
     await axios
 
@@ -85,6 +87,7 @@ function Table(): ReactElement {
             sortBy={sortBy}
             sortOrder={sortOrder}
             product_key_names={product_key_names}
+            
           />
 
           <tbody className="overflow-auto">

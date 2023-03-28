@@ -10,6 +10,7 @@ interface ISortArrowProps {
 }
 
 function SortArrow(props: ISortArrowProps) {
+
   return (
     <SortArrowWrapper>
       {props.sortBy === props.currentProperty ? (
