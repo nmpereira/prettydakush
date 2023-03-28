@@ -13,11 +13,8 @@ interface IPriceCellProps {
 }
 
 function PriceCell(props: IPriceCellProps): ReactElement {
-
-  // console.log('price cell',props.type,props.price, props.previous_price, typeof props.price, typeof props.previous_price)
-
-  if(props.price !== props.previous_price) {
-    console.log('price changed',props.type,props.price, props.previous_price)
+  if (props.price !== props.previous_price) {
+    console.log("price changed", props.type, props.price, props.previous_price);
   }
   return (
     <td>
@@ -31,7 +28,9 @@ function PriceCell(props: IPriceCellProps): ReactElement {
       {props.price !== props.previous_price ? (
         <>
           <div className="price-previous">
-            <span className="price__previous">${props.previous_price.toFixed(2)}</span>
+            <span className="price__previous">
+              ${props.previous_price.toFixed(2)}
+            </span>
           </div>
           <div className="date-previous">
             <span className="date__previous">
@@ -39,9 +38,7 @@ function PriceCell(props: IPriceCellProps): ReactElement {
             </span>
           </div>
         </>
-      ) : (
-        null
-      )}
+      ) : null}
     </td>
   );
 }

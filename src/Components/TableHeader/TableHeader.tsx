@@ -13,20 +13,16 @@ interface ITableHeaderProps {
 }
 
 function TableHeader(props: ITableHeaderProps): ReactElement {
-  // console.log(props);
-
   const handleSort = ({
     e,
     currentKey,
     sortOrder,
     sortBy,
-
   }: {
     e: MouseEvent<HTMLElement>;
     currentKey: string;
     sortOrder: string;
     sortBy: string;
- 
   }) => {
     e.preventDefault();
 
@@ -39,11 +35,9 @@ function TableHeader(props: ITableHeaderProps): ReactElement {
         props.setSortOrder("asc");
       }
     } else {
- 
       props.setSortBy(currentKey);
       props.setSortOrder("asc");
     }
-    
   };
 
   return (
@@ -76,7 +70,6 @@ function TableHeader(props: ITableHeaderProps): ReactElement {
                             currentKey: props.product_key_names[keyName],
                             sortOrder: props.sortOrder,
                             sortBy: props.sortBy,
-                   
                           })
                         }
                       >
@@ -91,7 +84,7 @@ function TableHeader(props: ITableHeaderProps): ReactElement {
                         onClick={(e) =>
                           handleSort({
                             e,
-                            currentKey: 'priceHistoryUpdatedAt',
+                            currentKey: "priceHistoryUpdatedAt",
                             sortOrder: props.sortOrder,
                             sortBy: "priceHistoryUpdatedAt",
                             // setSortBy: props.setSortBy,
@@ -103,7 +96,7 @@ function TableHeader(props: ITableHeaderProps): ReactElement {
                         <SortArrow
                           order={props.sortOrder}
                           sortBy={props.sortBy}
-                          currentProperty={'priceHistoryUpdatedAt'}
+                          currentProperty={"priceHistoryUpdatedAt"}
                         />
                       </HeaderKeyWrapper>
                     </>
@@ -135,7 +128,6 @@ function TableHeader(props: ITableHeaderProps): ReactElement {
                             currentKey: "promoPriceHistoryUpdatedAt",
                             sortOrder: props.sortOrder,
                             sortBy: "promoPriceHistoryUpdatedAt",
-       
                           })
                         }
                       >

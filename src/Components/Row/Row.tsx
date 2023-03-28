@@ -61,7 +61,8 @@ function RowComponent(props: IRowProps): ReactElement {
   return (
     <tr>
       <KeyRow>{index}</KeyRow>
-      {valueNames.map((valueName: string, index: number) => {
+      {valueNames.map((valueName: string, ind: number) => {
+        // console.log('ind',index);
         if (valueName === "price" || valueName === "promoPrice") {
           const previous_price_array = Object.entries(priceHistory).length;
           const [previous_date, previous_price] =
@@ -81,7 +82,7 @@ function RowComponent(props: IRowProps): ReactElement {
           if (valueName === "price") {
             return (
               <PriceCell
-                key={index}
+                key={ind}
                 type={"price"}
                 price={price}
                 date={dayjs(priceHistoryUpdatedAt)}
@@ -94,7 +95,7 @@ function RowComponent(props: IRowProps): ReactElement {
           if (valueName === "promoPrice") {
             return (
               <PriceCell
-                key={index}
+                key={ind}
                 type={"promoPrice"}
                 price={promoPrice}
                 date={dayjs(promoPriceHistoryUpdatedAt)}
@@ -107,7 +108,7 @@ function RowComponent(props: IRowProps): ReactElement {
 
         if (valueName === "pack_size") {
           return (
-            <RowWrapper key={index}>
+            <RowWrapper key={ind}>
               {/* if pack_size is 0, then show 1 */}
 
               {props[valueName as keyof IRowWrapperProps] === "0"
@@ -117,36 +118,44 @@ function RowComponent(props: IRowProps): ReactElement {
           );
         }
 
-
         if (valueName === "location_id") {
+          // console.log('key', ind)
           return (
-            <>
-              <LinkCell key={index} href={linkToStore} text={locationAddress} />
-            </>
+            <RowWrapper key={`${index}-loc_id`}>
+              <LinkCell href={linkToStore} text={locationAddress} />
+            </RowWrapper>
           );
         }
         if (valueName === "company_name") {
           return (
-            <>
-              <LinkCell key={index} href={linkToStore} text={`${props[valueName as keyof IRowWrapperProps]}-${locationName}`} />
-            </>
+            <RowWrapper key={`${index}-comp_name`}>
+              <LinkCell
+                href={linkToStore}
+                text={`${
+                  props[valueName as keyof IRowWrapperProps]
+                }-${locationName}`}
+              />
+            </RowWrapper>
           );
         }
 
         if (valueName === "productName" || valueName === "variation_name") {
           return (
-            <>
+            <RowWrapper
+              key={`${index}-${
+                valueName === "productName" ? "prod_name" : "var_name"
+              }`}
+            >
               <LinkCell
-                key={index}
                 href={linkToProduct}
                 text={props[valueName as keyof IRowWrapperProps]}
               />
-            </>
+            </RowWrapper>
           );
         }
 
         return (
-          <RowWrapper key={index}>
+          <RowWrapper key={ind}>
             {props[valueName as keyof IRowWrapperProps] || "N/A"}
           </RowWrapper>
         );
