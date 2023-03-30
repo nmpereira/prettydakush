@@ -27,3 +27,9 @@ export const TableTopSpacer = styled.div`
   height: 200px;
   width: 100%;
 `;
+
+export const SearchArea=styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`

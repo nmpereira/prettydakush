@@ -4,11 +4,14 @@ import axios from "axios";
 import TableHeader from "../TableHeader/TableHeader";
 import Pagination from "../Pagination/Pagination";
 import {
+  SearchArea,
   StyledTable,
   TablePageWrapper,
   TableTopSpacer,
   TableWrapper,
 } from "./Table.styles";
+import {DebounceInput} from 'react-debounce-input';
+
 
 function Table(): ReactElement {
   const [products, setProducts] = useState<any[]>([]);
@@ -18,19 +21,23 @@ function Table(): ReactElement {
   const [page, setPage] = useState<number>(1);
   const [metadata, setMetadata] = useState<any>({});
   const [loading, setLoading] = useState<boolean>(false);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
-
     getData();
-  }, [page, limit, sortBy, sortOrder]);
+  }, [page, limit, sortBy, sortOrder,search]);
+
+  useEffect(()=>{
+    console.log('search', search)
+  },[search]
+  )
 
   const getData = async () => {
-
     setLoading(true);
     await axios
 
       .get(
-        `https://data.nmpereira.com/api/products/all?limit=${limit}&page=${page}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+        `https://data.nmpereira.com/api/products/all?limit=${limit}&page=${page}&sortBy=${sortBy}&sortOrder=${sortOrder}${search===''?'': `&search=${search}`}`
       )
       .then((response) => {
         setProducts(response.data.products);
@@ -77,6 +84,24 @@ function Table(): ReactElement {
           total_products={metadata.sizeBeforeFilter}
         />
       </TableTopSpacer>
+      <SearchArea>
+        Search:
+        <DebounceInput
+     minLength={2}
+     className="input input-bordered input-primary w-full max-w-xs m-2"
+     placeholder="Search..."
+     debounceTimeout={800}
+     onChange={(e) => setSearch(e.target.value)}
+     value={search}
+     
+     />
+        <button
+          className="btn btn-active btn-ghost"
+          onClick={(e) => setSearch('')}
+        >
+          Clear
+        </button>
+      </SearchArea>
       <TableWrapper>
         <StyledTable className="table w-full">
           <TableHeader
@@ -87,7 +112,6 @@ function Table(): ReactElement {
             sortBy={sortBy}
             sortOrder={sortOrder}
             product_key_names={product_key_names}
-            
           />
 
           <tbody className="overflow-auto">
