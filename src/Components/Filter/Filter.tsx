@@ -13,6 +13,7 @@ export interface IFilterKeys {
   promo_price: Array<string>;
   quantityStatus: Array<string>;
   total_size: Array<string>;
+
 }
 
 function Filter(props: any) {
