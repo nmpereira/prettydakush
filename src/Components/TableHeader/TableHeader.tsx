@@ -1,6 +1,7 @@
 import React, { ReactElement, MouseEvent } from "react";
 import SortArrow from "../Sort/SortArrow";
 import { HeaderKeyWrapper, StyledTableHeader } from "./TableHeader.styles";
+import Filter from "../Filter/Filter";
 
 interface ITableHeaderProps {
   keyNames: Array<string>;
@@ -10,6 +11,12 @@ interface ITableHeaderProps {
   sortBy: string;
   sortOrder: string;
   product_key_names: Record<string, string>;
+  limit: number;
+  page: number;
+  search: string;
+
+  
+
 }
 
 function TableHeader(props: ITableHeaderProps): ReactElement {
@@ -63,6 +70,7 @@ function TableHeader(props: ITableHeaderProps): ReactElement {
                 <>
                   {keyName === "Price" ? (
                     <>
+                    <div className="badge badge-accent badge-sm"><Filter name={keyName} {...props} /></div>
                       <HeaderKeyWrapper
                         onClick={(e) =>
                           handleSort({
@@ -142,6 +150,10 @@ function TableHeader(props: ITableHeaderProps): ReactElement {
                   )}
                 </>
               ) : (
+
+
+                 
+          
                 <HeaderKeyWrapper
                   onClick={(e) =>
                     handleSort({
