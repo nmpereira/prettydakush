@@ -10,76 +10,60 @@ export interface IFilterKeys {
   location_id: Array<string>;
   pack_size: Array<string>;
   price: Array<string>;
-  promo_price: Array<string>;
+  promoPrice: Array<string>;
   quantityStatus: Array<string>;
   total_size: Array<string>;
-
 }
 
 function Filter(props: any) {
-  const { limit, page, sortBy, sortOrder, search } = props;
-
-  const [filters, setFilters] = useState<IFilterKeys>({
-    brandname: [],
-    company_name: [],
-    locationAddress: [],
-    locationName: [],
-    location_id: [],
-    pack_size: [],
-    price: [],
-    promo_price: [],
-    quantityStatus: [],
-    total_size: [],
-  });
-
-  const [filterApply, setFilterApply] = useState<IFilterKeys>({
-    brandname: [],
-    company_name: [],
-    locationAddress: [],
-    locationName: [],
-    location_id: [],
-    pack_size: [],
-    price: [],
-    promo_price: [],
-    quantityStatus: [],
-    total_size: [],
-  });
+  const {
+    limit,
+    page,
+    sortBy,
+    sortOrder,
+    search,
+    filters,
+    setFilters,
+    setFilterApply,
+    filterApply,
+  } = props;
 
   const getFilters = async () => {
     console.log("getFilters");
     const res = await axios.get(
       `https://data.nmpereira.com/api/products/filters?limit=${limit}&page=${page}&sortBy=${sortBy}&sortOrder=${sortOrder}${
         search === "" ? "" : `&search=${search}`
-      }`
-    );
-    const { filters } = await res.data;
+      }`,
 
-    setFilters(filters);
+    );
+    const { filters: filter_response } = await res.data;
+
+    setFilters(filter_response);
   };
 
-  const filterClick = () => {
-    getFilters();
+  const filterClick = async (e: any) => {
+    console.log("filterClick", props.name);
+    await getFilters();
   };
 
   return (
     <>
-      <a
-        href="#my-modal-2"
-        onClick={async (e) => {
-          filterClick();
-        }}
-      >
-        Filter
-      </a>
       <FilterModal
-        title={`${props.name} Filter`}
+        title={"Filters"}
         body={filters}
-        name={props.name.toLowerCase()}
         apply={"apply"}
         clear={"clear"}
         setFilterApply={setFilterApply}
         filterApply={filterApply}
       />
+      <a
+        href="#my-modal-2"
+        onClick={async (e) => {
+          filterClick(e);
+        }}
+      >
+        Filter
+      </a>
     </>
   );
 }

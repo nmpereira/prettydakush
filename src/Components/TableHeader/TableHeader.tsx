@@ -15,8 +15,6 @@ interface ITableHeaderProps {
   page: number;
   search: string;
 
-  
-
 }
 
 function TableHeader(props: ITableHeaderProps): ReactElement {
@@ -70,7 +68,7 @@ function TableHeader(props: ITableHeaderProps): ReactElement {
                 <>
                   {keyName === "Price" ? (
                     <>
-                    <div className="badge badge-accent badge-sm"><Filter name={keyName} {...props} /></div>
+
                       <HeaderKeyWrapper
                         onClick={(e) =>
                           handleSort({
@@ -88,6 +86,7 @@ function TableHeader(props: ITableHeaderProps): ReactElement {
                           currentProperty={props.product_key_names[keyName]}
                         />
                       </HeaderKeyWrapper>
+
                       <HeaderKeyWrapper
                         onClick={(e) =>
                           handleSort({
@@ -110,6 +109,7 @@ function TableHeader(props: ITableHeaderProps): ReactElement {
                     </>
                   ) : (
                     <>
+
                       <HeaderKeyWrapper
                         onClick={(e) =>
                           handleSort({
@@ -150,29 +150,31 @@ function TableHeader(props: ITableHeaderProps): ReactElement {
                   )}
                 </>
               ) : (
+                <>
 
 
-                 
-          
-                <HeaderKeyWrapper
-                  onClick={(e) =>
-                    handleSort({
-                      e,
-                      currentKey: props.product_key_names[keyName],
-                      sortOrder: props.sortOrder,
-                      sortBy: props.sortBy,
-                      // setSortBy: props.setSortBy,
-                      // setSortOrder: props.setSortOrder,
-                    })
-                  }
-                >
-                  {keyName}
-                  <SortArrow
-                    order={props.sortOrder}
-                    sortBy={props.sortBy}
-                    currentProperty={props.product_key_names[keyName]}
-                  />
-                </HeaderKeyWrapper>
+     
+
+                  <HeaderKeyWrapper
+                    onClick={(e) =>
+                      handleSort({
+                        e,
+                        currentKey: props.product_key_names[keyName],
+                        sortOrder: props.sortOrder,
+                        sortBy: props.sortBy,
+                        // setSortBy: props.setSortBy,
+                        // setSortOrder: props.setSortOrder,
+                      })
+                    }
+                  >
+                    {keyName}
+                    <SortArrow
+                      order={props.sortOrder}
+                      sortBy={props.sortBy}
+                      currentProperty={props.product_key_names[keyName]}
+                    />
+                  </HeaderKeyWrapper>
+                </>
               )}
             </th>
           );

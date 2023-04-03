@@ -11,6 +11,7 @@ import {
   TableWrapper,
 } from "./Table.styles";
 import { DebounceInput } from "react-debounce-input";
+import Filter, { IFilterKeys } from "../Filter/Filter";
 
 function Table(): ReactElement {
   const [products, setProducts] = useState<any[]>([]);
@@ -21,12 +22,36 @@ function Table(): ReactElement {
   const [metadata, setMetadata] = useState<any>({});
   const [loading, setLoading] = useState<boolean>(false);
   const [search, setSearch] = useState("");
- 
+
+  const [filters, setFilters] = useState<IFilterKeys>({
+    brandname: [],
+    company_name: [],
+    locationAddress: [],
+    locationName: [],
+    location_id: [],
+    pack_size: [],
+    price: [],
+    promoPrice: [],
+    quantityStatus: [],
+    total_size: [],
+  });
+
+  const [filterApply, setFilterApply] = useState<IFilterKeys>({
+    brandname: [],
+    company_name: [],
+    locationAddress: [],
+    locationName: [],
+    location_id: [],
+    pack_size: [],
+    price: [],
+    promoPrice: [],
+    quantityStatus: [],
+    total_size: [],
+  });
+
   useEffect(() => {
     getData();
   }, [page, limit, sortBy, sortOrder, search]);
-
-  
 
   const getData = async () => {
     setLoading(true);
@@ -35,7 +60,12 @@ function Table(): ReactElement {
       .get(
         `https://data.nmpereira.com/api/products/all?limit=${limit}&page=${page}&sortBy=${sortBy}&sortOrder=${sortOrder}${
           search === "" ? "" : `&search=${search}`
-        }`
+        }`,
+        {
+          params: {
+            filter: filterApply,
+          },
+        }
       )
       .then((response) => {
         setProducts(response.data.products);
@@ -98,6 +128,20 @@ function Table(): ReactElement {
           {`${!search ? `search` : `clear`}`}
         </button>
       </SearchArea>
+      <div>
+        <Filter
+          filters={filters}
+          setFilters={setFilters}
+          filterApply={filterApply}
+          setFilterApply={setFilterApply}
+          limit={limit}
+          page={page}
+          sortBy={sortBy}
+          sortOrder={sortOrder}
+          search={search}
+          name="brandname"
+        />
+      </div>
       <TableWrapper>
         <StyledTable className="table w-full">
           <TableHeader
@@ -111,7 +155,6 @@ function Table(): ReactElement {
             limit={limit}
             search={search}
             page={page}
-            
           />
 
           <tbody className="overflow-auto">

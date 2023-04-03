@@ -1,33 +1,33 @@
 import { useEffect, useState } from "react";
 
-function CheckBox(props:any) {
-
-
-    const {inputRef, index, filter, filterChange,name,filterApply,clearFilters} = props;
-
+function CheckBox(props: any) {
+  const {
+    inputRef,
     
-    const [checked, setChecked] = useState(false);
-    
-    useEffect(() => {
-        if (filterApply[name].includes(filter)) {
-            setChecked(true);
-        } else {
-            setChecked(false);
-        }
-       
-    }, [checked,filterChange,clearFilters]);
-    
-    
+    filter,
+    filterChange,
+    name,
+    filterApply,
+    clearFilters,
+  } = props;
 
+  const [checked, setChecked] = useState(false);
 
+  useEffect(() => {
+    if (filterApply[name].includes(filter)) {
+      setChecked(true);
+    } else {
+      setChecked(false);
+    }
+  }, [checked, filterChange, clearFilters]);
 
   return (
-    <div className="form-control" key={index}>
+    <div className="form-control" >
       <label className="cursor-pointer label">
         <input
           type="checkbox"
           className="checkbox"
-            checked={checked}
+          checked={checked}
           id={name}
           ref={inputRef}
           onChange={(e) => {

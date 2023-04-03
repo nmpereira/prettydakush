@@ -1,21 +1,23 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { IFilterKeys } from "./Filter";
 import CheckBox from "./Checkbox";
+import FilterTabs from "./FilterTabs";
 
 interface IFilterModal {
   title: string;
   clear: string;
   apply: string;
   body: IFilterKeys;
-  name: keyof IFilterKeys;
   setFilterApply: (e: any) => void;
   filterApply: IFilterKeys;
 }
 
 function FilterModal(props: IFilterModal) {
-  const { body, name, title, clear, apply, setFilterApply, filterApply } =
-    props;
+  const { body, title, clear, apply, setFilterApply, filterApply } = props;
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const [tabSelected, setTabSelected] =
+    useState<keyof IFilterKeys>("brandname");
 
   const filterUpdate = (
     value: boolean,
@@ -25,11 +27,11 @@ function FilterModal(props: IFilterModal) {
     const filerCopy = JSON.parse(JSON.stringify(filterApply));
 
     if (value) {
-      filerCopy[name].push(filter);
+      filerCopy[tabSelected].push(filter);
     } else {
-      const index = filerCopy[name].indexOf(filter);
+      const index = filerCopy[tabSelected].indexOf(filter);
       if (index > -1) {
-        filerCopy[name].splice(index, 1);
+        filerCopy[tabSelected].splice(index, 1);
       }
     }
 
@@ -44,37 +46,38 @@ function FilterModal(props: IFilterModal) {
 
   const clearFilters = (e: any) => {
     // e.preventDefault();
-    
-    filterApply[name] = [];
-    
-    console.log("clearFilters", filterApply[name]);
-  };
 
-  console.log("filterApply", filterApply[name]);
+    filterApply[tabSelected] = [];
+  };
 
   return (
     <>
       {/* The button to open modal */}
 
-      <div className="modal" id="my-modal-2">
+      <div className="modal " id="my-modal-2">
         <div className="modal-box">
           <h3 className="font-bold text-lg">{title}</h3>
-          <div className="flex items-center justify-center p-4 flex-col overflow-x-auto max-h-64 pt-48">
+          <FilterTabs filters={body} setTabSelected={setTabSelected} />
+
+          <div className="overflow-x-auto max-h-52">
+          <div className="flex items-center justify-center p-4 flex-col">
             {body &&
-              body[name].length &&
-              body[name].map((filter, index) => (
+              body[tabSelected]?.length &&
+              body[tabSelected
+              ].map((filter, index) => (
                 <CheckBox
                   inputRef={inputRef}
-                  index={index}
+                  key={`filter-${index}`}
                   filter={filter}
                   filterChange={filterChange}
-                  name={name}
+                  name={tabSelected}
                   filterApply={filterApply}
                   clearFilters={clearFilters}
                 />
               ))}
           </div>
-          <div className="modal-action">
+          </div>
+                    <div className="modal-action">
             <a href="#" className="btn" onClick={(e) => clearFilters(e)}>
               {clear}
             </a>
