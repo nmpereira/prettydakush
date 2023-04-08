@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 function CheckBox(props: any) {
   const {
     inputRef,
-    
+    updateFilterCounters,
     filter,
     filterChange,
     name,
@@ -19,7 +19,10 @@ function CheckBox(props: any) {
     } else {
       setChecked(false);
     }
+    
   }, [checked, filterChange, clearFilters]);
+
+  useEffect(() => {updateFilterCounters()}, [checked]);
 
   return (
     <div className="form-control" >
@@ -32,6 +35,7 @@ function CheckBox(props: any) {
           ref={inputRef}
           onChange={(e) => {
             filterChange(e.target.checked, filter);
+            
           }}
         />
         <span className="checkbox-mark"></span>

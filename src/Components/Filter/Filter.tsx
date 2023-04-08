@@ -26,16 +26,16 @@ function Filter(props: any) {
     setFilters,
     setFiltersApplied,
     filtersApplied,
-    filterApply
+    filterApply,
   } = props;
 
+ 
+
   const getFilters = async () => {
-    console.log("getFilters");
     const res = await axios.get(
       `https://data.nmpereira.com/api/products/filters?limit=${limit}&page=${page}&sortBy=${sortBy}&sortOrder=${sortOrder}${
         search === "" ? "" : `&search=${search}`
-      }`,
-
+      }`
     );
     const { filters: filter_response } = await res.data;
 
@@ -43,23 +43,28 @@ function Filter(props: any) {
   };
 
   const filterClick = async (e: any) => {
-    console.log("filterClick", props.name);
+    // e.preventDefault();
+ 
+
     await getFilters();
   };
 
   return (
     <>
-      <FilterModal
-        title={"Filters"}
-        body={filters}
-        apply={"apply"}
-        clear={"clear"}
-        setFiltersApplied={setFiltersApplied}
-        filtersApplied={filtersApplied}
-        filterApply={filterApply}
-      />
+  
+        <FilterModal
+          title={"Filters"}
+          body={filters}
+          apply={"apply"}
+          clear={"clear"}
+          setFiltersApplied={setFiltersApplied}
+          filtersApplied={filtersApplied}
+          filterApply={filterApply}
+        />
+
+
       <a
-        href="#my-modal-2"
+        href="#filters"
         onClick={async (e) => {
           filterClick(e);
         }}

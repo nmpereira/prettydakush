@@ -28,6 +28,26 @@ function FilterModal(props: IFilterModal) {
   const [tabSelected, setTabSelected] =
     useState<keyof IFilterKeys>("brandname");
 
+  const [filterCounters, setFilterCounters] = useState<{
+    [key in keyof IFilterKeys]: number;
+  }>(
+    Object.keys(body).reduce((acc: Record<any, any>, key) => {
+      acc[key] = 0;
+      return acc;
+    }, {}) as { [key in keyof IFilterKeys]: number }
+  );
+
+  const updateFilterCounters = () => {
+    const filterCountersCopy = JSON.parse(JSON.stringify(filterCounters));
+
+    Object.keys(filtersApplied).forEach((key) => {
+      // @ts-ignore
+      filterCountersCopy[key] = filtersApplied[key].length;
+    });
+
+    setFilterCounters(filterCountersCopy);
+  };
+
   const filterUpdate = (
     value: boolean,
     filter: string,
@@ -44,28 +64,47 @@ function FilterModal(props: IFilterModal) {
       }
     }
 
+    
+
     return filerCopy;
   };
 
   const filterChange = (value: boolean, filter: string) => {
     const filterApplyUpdated = filterUpdate(value, filter, filtersApplied);
     setFiltersApplied(filterApplyUpdated);
+   
   };
 
-  const clearFilters = (e: any) => {
+  const clearFilters = ({ e, all }: { e: any; all: boolean }) => {
     // e.preventDefault();
 
-    filtersApplied[tabSelected] = [];
+    // if all is true, clear all filters. Otherwise, clear only the selected tab
+    if (all) {
+      Object.keys(filtersApplied).forEach((key
+        ) => {
+        // @ts-ignore
+        filtersApplied[key] = [];
+      });
+
+    } else {
+      filtersApplied[tabSelected] = [];
+    }
+
+    // filtersApplied[tabSelected] = [];
   };
 
   return (
     <>
       {/* The button to open modal */}
 
-      <div className="modal " id="my-modal-2">
+      <div className="modal" id="filters">
         <div className="modal-box">
           <h3 className="font-bold text-lg">{title}</h3>
-          <FilterTabs filters={body} setTabSelected={setTabSelected} />
+          <FilterTabs
+            filters={body}
+            setTabSelected={setTabSelected}
+            filterCounters={filterCounters}
+          />
 
           <div className="overflow-x-auto max-h-52">
             <div className="flex items-center justify-center p-4 flex-col">
@@ -80,6 +119,7 @@ function FilterModal(props: IFilterModal) {
                     name={tabSelected}
                     filtersApplied={filtersApplied}
                     clearFilters={clearFilters}
+                    updateFilterCounters={updateFilterCounters}
                   />
                 ))}
             </div>
@@ -89,7 +129,17 @@ function FilterModal(props: IFilterModal) {
               href="#"
               className="btn"
               onClick={(e) => {
-                clearFilters(e);
+                clearFilters({ e, all: true });
+                filterApply();
+              }}
+            >
+              {"clear all"}
+            </a>
+            <a
+              href="#"
+              className="btn"
+              onClick={(e) => {
+                clearFilters({ e, all: false });
                 filterApply();
               }}
             >
