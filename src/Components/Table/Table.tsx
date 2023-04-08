@@ -114,6 +114,7 @@ function Table(): ReactElement {
           setPage={setPage}
           total_pages={metadata.total_pages}
           total_products={metadata.sizeBeforeFilter}
+          loading={loading}
         />
       </TableTopSpacer>
       <SearchArea>
@@ -135,7 +136,6 @@ function Table(): ReactElement {
         >
           {`${!search ? `search` : `clear`}`}
         </button>
-      </SearchArea>
       <div>
         <Filter
           filters={filters}
@@ -151,6 +151,7 @@ function Table(): ReactElement {
           filterApply={filterApply}
         />
       </div>
+      </SearchArea>
       <TableWrapper>
         <StyledTable className="table w-full">
           <TableHeader

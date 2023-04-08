@@ -62,7 +62,6 @@ function RowComponent(props: IRowProps): ReactElement {
     <tr>
       <KeyRow>{index}</KeyRow>
       {valueNames.map((valueName: string, ind: number) => {
-        // console.log('ind',index);
         if (valueName === "price" || valueName === "promoPrice") {
           const previous_price_array = Object.entries(priceHistory).length;
           const [previous_date, previous_price] =
@@ -119,7 +118,6 @@ function RowComponent(props: IRowProps): ReactElement {
         }
 
         if (valueName === "location_id") {
-          // console.log('key', ind)
           return (
             <RowWrapper key={`${index}-loc_id`}>
               <LinkCell href={linkToStore} text={locationAddress} />

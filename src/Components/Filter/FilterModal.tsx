@@ -11,6 +11,9 @@ interface IFilterModal {
   setFiltersApplied: (e: any) => void;
   filtersApplied: IFilterKeys;
   filterApply: () => void;
+  tabSelected: keyof IFilterKeys;
+  setTabSelected: (e: any) => void;
+  filtersLoading: boolean;
 }
 
 function FilterModal(props: IFilterModal) {
@@ -22,11 +25,11 @@ function FilterModal(props: IFilterModal) {
     setFiltersApplied,
     filtersApplied,
     filterApply,
+    tabSelected,
+    setTabSelected,
+    filtersLoading,
   } = props;
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const [tabSelected, setTabSelected] =
-    useState<keyof IFilterKeys>("brandname");
 
   const [filterCounters, setFilterCounters] = useState<{
     [key in keyof IFilterKeys]: number;
@@ -64,15 +67,12 @@ function FilterModal(props: IFilterModal) {
       }
     }
 
-    
-
     return filerCopy;
   };
 
   const filterChange = (value: boolean, filter: string) => {
     const filterApplyUpdated = filterUpdate(value, filter, filtersApplied);
     setFiltersApplied(filterApplyUpdated);
-   
   };
 
   const clearFilters = ({ e, all }: { e: any; all: boolean }) => {
@@ -80,12 +80,10 @@ function FilterModal(props: IFilterModal) {
 
     // if all is true, clear all filters. Otherwise, clear only the selected tab
     if (all) {
-      Object.keys(filtersApplied).forEach((key
-        ) => {
+      Object.keys(filtersApplied).forEach((key) => {
         // @ts-ignore
         filtersApplied[key] = [];
       });
-
     } else {
       filtersApplied[tabSelected] = [];
     }
@@ -108,9 +106,9 @@ function FilterModal(props: IFilterModal) {
 
           <div className="overflow-x-auto max-h-52">
             <div className="flex items-center justify-center p-4 flex-col">
-              {body &&
-                body[tabSelected]?.length &&
-                body[tabSelected].map((filter, index) => (
+              {!filtersLoading ? (
+                (body &&
+                body[tabSelected]?.length) ? (                body[tabSelected].map((filter, index) => (
                   <CheckBox
                     inputRef={inputRef}
                     key={`filter-${index}`}
@@ -121,7 +119,18 @@ function FilterModal(props: IFilterModal) {
                     clearFilters={clearFilters}
                     updateFilterCounters={updateFilterCounters}
                   />
-                ))}
+                ))) : (
+                  <div className="text-center">
+                    <p className="text-gray-500">
+                      No filters available. Clear all filters or refresh the page.
+                    </p>
+                  </div>
+
+                )
+
+              ) : (
+                <progress className="progress progress-primary w-56"></progress>
+              )}
             </div>
           </div>
           <div className="modal-action">

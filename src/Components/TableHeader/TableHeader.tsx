@@ -56,7 +56,6 @@ function TableHeader(props: ITableHeaderProps): ReactElement {
           )}
         </th>
         {props.keyNames.map((keyName, index) => {
-          // console.log(1,{currentKey:props.product_key_names[keyName],sortBy:props.sortBy, sortOrder:props.sortOrder});
 
           return props.loading ? (
             <th key={index}>
