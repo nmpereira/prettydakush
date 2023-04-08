@@ -118,7 +118,11 @@ function Table(): ReactElement {
           className="input input-bordered input-primary w-full max-w-xs m-2"
           placeholder="Search..."
           debounceTimeout={800}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setSortBy("score");
+            setSortOrder("desc");
+          }}
           value={search}
         />
         <button
