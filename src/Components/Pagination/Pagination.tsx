@@ -29,7 +29,7 @@ function Pagination(props: IPaginationProps): ReactElement {
 
   return (
     <>
-    {!loading ? (
+
       <ReactPaginate
         breakLabel=". . . . ."
         nextLabel="next >"
@@ -47,9 +47,7 @@ function Pagination(props: IPaginationProps): ReactElement {
         breakClassName={"btn-disabled"}
         breakLinkClassName={"btn-disabled items-center flex"}
         // initialPage={0}
-      />) : (
-        <progress className="progress progress-primary w-56"></progress>
-      )}
+      />
     </>
   );
 }
