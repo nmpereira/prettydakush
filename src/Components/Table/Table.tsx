@@ -53,6 +53,10 @@ function Table(): ReactElement {
     getData();
   }, [page, limit, sortBy, sortOrder, search]);
 
+  const filterApply=  () => {
+     getData();
+  }
+
   const getData = async () => {
     setLoading(true);
     await axios
@@ -144,6 +148,7 @@ function Table(): ReactElement {
           sortOrder={sortOrder}
           search={search}
           name="brandname"
+          filterApply={filterApply}
         />
       </div>
       <TableWrapper>

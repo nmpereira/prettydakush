@@ -26,6 +26,7 @@ function Filter(props: any) {
     setFilters,
     setFiltersApplied,
     filtersApplied,
+    filterApply
   } = props;
 
   const getFilters = async () => {
@@ -55,6 +56,7 @@ function Filter(props: any) {
         clear={"clear"}
         setFiltersApplied={setFiltersApplied}
         filtersApplied={filtersApplied}
+        filterApply={filterApply}
       />
       <a
         href="#my-modal-2"

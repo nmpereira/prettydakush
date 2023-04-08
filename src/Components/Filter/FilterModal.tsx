@@ -10,10 +10,19 @@ interface IFilterModal {
   body: IFilterKeys;
   setFiltersApplied: (e: any) => void;
   filtersApplied: IFilterKeys;
+  filterApply: () => void;
 }
 
 function FilterModal(props: IFilterModal) {
-  const { body, title, clear, apply, setFiltersApplied, filtersApplied } = props;
+  const {
+    body,
+    title,
+    clear,
+    apply,
+    setFiltersApplied,
+    filtersApplied,
+    filterApply,
+  } = props;
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [tabSelected, setTabSelected] =
@@ -40,7 +49,6 @@ function FilterModal(props: IFilterModal) {
 
   const filterChange = (value: boolean, filter: string) => {
     const filterApplyUpdated = filterUpdate(value, filter, filtersApplied);
-
     setFiltersApplied(filterApplyUpdated);
   };
 
@@ -60,28 +68,40 @@ function FilterModal(props: IFilterModal) {
           <FilterTabs filters={body} setTabSelected={setTabSelected} />
 
           <div className="overflow-x-auto max-h-52">
-          <div className="flex items-center justify-center p-4 flex-col">
-            {body &&
-              body[tabSelected]?.length &&
-              body[tabSelected
-              ].map((filter, index) => (
-                <CheckBox
-                  inputRef={inputRef}
-                  key={`filter-${index}`}
-                  filter={filter}
-                  filterChange={filterChange}
-                  name={tabSelected}
-                  filtersApplied={filtersApplied}
-                  clearFilters={clearFilters}
-                />
-              ))}
+            <div className="flex items-center justify-center p-4 flex-col">
+              {body &&
+                body[tabSelected]?.length &&
+                body[tabSelected].map((filter, index) => (
+                  <CheckBox
+                    inputRef={inputRef}
+                    key={`filter-${index}`}
+                    filter={filter}
+                    filterChange={filterChange}
+                    name={tabSelected}
+                    filtersApplied={filtersApplied}
+                    clearFilters={clearFilters}
+                  />
+                ))}
+            </div>
           </div>
-          </div>
-                    <div className="modal-action">
-            <a href="#" className="btn" onClick={(e) => clearFilters(e)}>
+          <div className="modal-action">
+            <a
+              href="#"
+              className="btn"
+              onClick={(e) => {
+                clearFilters(e);
+                filterApply();
+              }}
+            >
               {clear}
             </a>
-            <a href="#" className="btn">
+            <a
+              href="#"
+              className="btn"
+              onClick={(e) => {
+                filterApply();
+              }}
+            >
               {apply}
             </a>
           </div>
