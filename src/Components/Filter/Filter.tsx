@@ -24,8 +24,8 @@ function Filter(props: any) {
     search,
     filters,
     setFilters,
-    setFilterApply,
-    filterApply,
+    setFiltersApplied,
+    filtersApplied,
   } = props;
 
   const getFilters = async () => {
@@ -53,8 +53,8 @@ function Filter(props: any) {
         body={filters}
         apply={"apply"}
         clear={"clear"}
-        setFilterApply={setFilterApply}
-        filterApply={filterApply}
+        setFiltersApplied={setFiltersApplied}
+        filtersApplied={filtersApplied}
       />
       <a
         href="#my-modal-2"

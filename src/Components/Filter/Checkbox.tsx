@@ -7,14 +7,14 @@ function CheckBox(props: any) {
     filter,
     filterChange,
     name,
-    filterApply,
+    filtersApplied,
     clearFilters,
   } = props;
 
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    if (filterApply[name].includes(filter)) {
+    if (filtersApplied[name].includes(filter)) {
       setChecked(true);
     } else {
       setChecked(false);

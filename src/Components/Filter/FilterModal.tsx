@@ -8,12 +8,12 @@ interface IFilterModal {
   clear: string;
   apply: string;
   body: IFilterKeys;
-  setFilterApply: (e: any) => void;
-  filterApply: IFilterKeys;
+  setFiltersApplied: (e: any) => void;
+  filtersApplied: IFilterKeys;
 }
 
 function FilterModal(props: IFilterModal) {
-  const { body, title, clear, apply, setFilterApply, filterApply } = props;
+  const { body, title, clear, apply, setFiltersApplied, filtersApplied } = props;
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [tabSelected, setTabSelected] =
@@ -22,9 +22,9 @@ function FilterModal(props: IFilterModal) {
   const filterUpdate = (
     value: boolean,
     filter: string,
-    filterApply: IFilterKeys
+    filtersApplied: IFilterKeys
   ) => {
-    const filerCopy = JSON.parse(JSON.stringify(filterApply));
+    const filerCopy = JSON.parse(JSON.stringify(filtersApplied));
 
     if (value) {
       filerCopy[tabSelected].push(filter);
@@ -39,15 +39,15 @@ function FilterModal(props: IFilterModal) {
   };
 
   const filterChange = (value: boolean, filter: string) => {
-    const filterApplyUpdated = filterUpdate(value, filter, filterApply);
+    const filterApplyUpdated = filterUpdate(value, filter, filtersApplied);
 
-    setFilterApply(filterApplyUpdated);
+    setFiltersApplied(filterApplyUpdated);
   };
 
   const clearFilters = (e: any) => {
     // e.preventDefault();
 
-    filterApply[tabSelected] = [];
+    filtersApplied[tabSelected] = [];
   };
 
   return (
@@ -71,7 +71,7 @@ function FilterModal(props: IFilterModal) {
                   filter={filter}
                   filterChange={filterChange}
                   name={tabSelected}
-                  filterApply={filterApply}
+                  filtersApplied={filtersApplied}
                   clearFilters={clearFilters}
                 />
               ))}

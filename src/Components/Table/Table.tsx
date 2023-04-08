@@ -36,7 +36,7 @@ function Table(): ReactElement {
     total_size: [],
   });
 
-  const [filterApply, setFilterApply] = useState<IFilterKeys>({
+  const [filtersApplied, setFiltersApplied] = useState<IFilterKeys>({
     brandname: [],
     company_name: [],
     locationAddress: [],
@@ -63,7 +63,7 @@ function Table(): ReactElement {
         }`,
         {
           params: {
-            filter: filterApply,
+            filter: filtersApplied,
           },
         }
       )
@@ -136,8 +136,8 @@ function Table(): ReactElement {
         <Filter
           filters={filters}
           setFilters={setFilters}
-          filterApply={filterApply}
-          setFilterApply={setFilterApply}
+          filtersApplied={filtersApplied}
+          setFiltersApplied={setFiltersApplied}
           limit={limit}
           page={page}
           sortBy={sortBy}
