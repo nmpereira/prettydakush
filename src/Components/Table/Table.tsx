@@ -53,9 +53,9 @@ function Table(): ReactElement {
     getData();
   }, [page, limit, sortBy, sortOrder, search]);
 
-  const filterApply=  () => {
-     getData();
-  }
+  const filterApply = () => {
+    getData();
+  };
 
   const getData = async () => {
     setLoading(true);
@@ -118,6 +118,26 @@ function Table(): ReactElement {
         />
       </TableTopSpacer>
       <SearchArea>
+        <div>
+          <label className="label">
+            <button className="btn btn-disabled mr-2">Limit</button>
+            <select
+              className="select select-primary w-25 max-w-xs mr-2"
+              value={limit}
+              onChange={(e) => {
+                setLimit(parseInt(e.target.value));
+                setPage(1);
+              }}
+            >
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={25}>25</option>
+              <option value={50}>50</option>
+              <option value={100}>100</option>
+              <option value={250}>250</option>
+            </select>
+          </label>
+        </div>
         <DebounceInput
           minLength={2}
           className="input input-bordered input-primary w-full max-w-xs m-2"
@@ -136,21 +156,21 @@ function Table(): ReactElement {
         >
           {`${!search ? `search` : `clear`}`}
         </button>
-      <div>
-        <Filter
-          filters={filters}
-          setFilters={setFilters}
-          filtersApplied={filtersApplied}
-          setFiltersApplied={setFiltersApplied}
-          limit={limit}
-          page={page}
-          sortBy={sortBy}
-          sortOrder={sortOrder}
-          search={search}
-          name="brandname"
-          filterApply={filterApply}
-        />
-      </div>
+        <div>
+          <Filter
+            filters={filters}
+            setFilters={setFilters}
+            filtersApplied={filtersApplied}
+            setFiltersApplied={setFiltersApplied}
+            limit={limit}
+            page={page}
+            sortBy={sortBy}
+            sortOrder={sortOrder}
+            search={search}
+            name="brandname"
+            filterApply={filterApply}
+          />
+        </div>
       </SearchArea>
       <TableWrapper>
         <StyledTable className="table w-full">
