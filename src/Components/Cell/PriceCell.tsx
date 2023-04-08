@@ -13,9 +13,7 @@ interface IPriceCellProps {
 }
 
 function PriceCell(props: IPriceCellProps): ReactElement {
-  if (props.price !== props.previous_price) {
-    console.log("price changed", props.type, props.price, props.previous_price);
-  }
+
   return (
     <td>
       <div className="price">

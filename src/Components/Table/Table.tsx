@@ -10,8 +10,8 @@ import {
   TableTopSpacer,
   TableWrapper,
 } from "./Table.styles";
-import {DebounceInput} from 'react-debounce-input';
-
+import { DebounceInput } from "react-debounce-input";
+import Filter, { IFilterKeys } from "../Filter/Filter";
 
 function Table(): ReactElement {
   const [products, setProducts] = useState<any[]>([]);
@@ -21,23 +21,55 @@ function Table(): ReactElement {
   const [page, setPage] = useState<number>(1);
   const [metadata, setMetadata] = useState<any>({});
   const [loading, setLoading] = useState<boolean>(false);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
+
+  const [filters, setFilters] = useState<IFilterKeys>({
+    brandname: [],
+    company_name: [],
+    locationAddress: [],
+    locationName: [],
+    location_id: [],
+    pack_size: [],
+    price: [],
+    promoPrice: [],
+    quantityStatus: [],
+    total_size: [],
+  });
+
+  const [filtersApplied, setFiltersApplied] = useState<IFilterKeys>({
+    brandname: [],
+    company_name: [],
+    locationAddress: [],
+    locationName: [],
+    location_id: [],
+    pack_size: [],
+    price: [],
+    promoPrice: [],
+    quantityStatus: [],
+    total_size: [],
+  });
 
   useEffect(() => {
     getData();
-  }, [page, limit, sortBy, sortOrder,search]);
+  }, [page, limit, sortBy, sortOrder, search]);
 
-  useEffect(()=>{
-    console.log('search', search)
-  },[search]
-  )
+  const filterApply=  () => {
+     getData();
+  }
 
   const getData = async () => {
     setLoading(true);
     await axios
 
       .get(
-        `https://data.nmpereira.com/api/products/all?limit=${limit}&page=${page}&sortBy=${sortBy}&sortOrder=${sortOrder}${search===''?'': `&search=${search}`}`
+        `https://data.nmpereira.com/api/products/all?limit=${limit}&page=${page}&sortBy=${sortBy}&sortOrder=${sortOrder}${
+          search === "" ? "" : `&search=${search}`
+        }`,
+        {
+          params: {
+            filter: filtersApplied,
+          },
+        }
       )
       .then((response) => {
         setProducts(response.data.products);
@@ -82,25 +114,43 @@ function Table(): ReactElement {
           setPage={setPage}
           total_pages={metadata.total_pages}
           total_products={metadata.sizeBeforeFilter}
+          loading={loading}
         />
       </TableTopSpacer>
       <SearchArea>
-        Search:
         <DebounceInput
-     minLength={2}
-     className="input input-bordered input-primary w-full max-w-xs m-2"
-     placeholder="Search..."
-     debounceTimeout={800}
-     onChange={(e) => setSearch(e.target.value)}
-     value={search}
-     
-     />
+          minLength={2}
+          className="input input-bordered input-primary w-full max-w-xs m-2"
+          placeholder="Search..."
+          debounceTimeout={800}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setSortBy("score");
+            setSortOrder("desc");
+          }}
+          value={search}
+        />
         <button
-          className="btn btn-active btn-ghost"
-          onClick={(e) => setSearch('')}
+          className={`btn btn-active ${!search ? `btn-ghost` : `btn-primary`}`}
+          onClick={(e) => setSearch("")}
         >
-          Clear
+          {`${!search ? `search` : `clear`}`}
         </button>
+      <div>
+        <Filter
+          filters={filters}
+          setFilters={setFilters}
+          filtersApplied={filtersApplied}
+          setFiltersApplied={setFiltersApplied}
+          limit={limit}
+          page={page}
+          sortBy={sortBy}
+          sortOrder={sortOrder}
+          search={search}
+          name="brandname"
+          filterApply={filterApply}
+        />
+      </div>
       </SearchArea>
       <TableWrapper>
         <StyledTable className="table w-full">
@@ -112,6 +162,9 @@ function Table(): ReactElement {
             sortBy={sortBy}
             sortOrder={sortOrder}
             product_key_names={product_key_names}
+            limit={limit}
+            search={search}
+            page={page}
           />
 
           <tbody className="overflow-auto">

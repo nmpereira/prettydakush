@@ -9,11 +9,13 @@ interface IPaginationProps {
   setPage: (page: number) => void;
   total_pages: number;
   total_products: number;
+  loading: boolean;
 }
 
 function Pagination(props: IPaginationProps): ReactElement {
-  const page_limit = Number(props.limit);
-  const total_count = Number(props.total_products);
+  const {loading,limit,total_products,setPage} = props;
+  const page_limit = Number(limit);
+  const total_count = Number(total_products);
 
   const [itemOffset, setItemOffset] = useState(0);
 
@@ -22,11 +24,12 @@ function Pagination(props: IPaginationProps): ReactElement {
   const pageCount = Math.ceil(total_count / page_limit)||0;
 
   const handlePageClick = (event: { selected: number }) => {
-    props.setPage(event.selected + 1);
+    setPage(event.selected + 1);
   };
 
   return (
     <>
+
       <ReactPaginate
         breakLabel=". . . . ."
         nextLabel="next >"
