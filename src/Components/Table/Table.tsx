@@ -11,7 +11,40 @@ import {
 	TableWrapper,
 } from "./Table.styles";
 import { DebounceInput } from "react-debounce-input";
-import Filter, { IFilterKeys } from "../Filter/Filter";
+import Filter, { IFilterKeys, IFilterKeysExtended } from "../Filter/Filter";
+
+export const reformatKeyNames = (key: string): keyof IFilterKeysExtended => {
+	switch (key) {
+		case "company_name":
+			return "companyName";
+		case "location_id":
+			return "locationId";
+		case "brandname":
+			return "brandname";
+		case "variation_name":
+			return "variationName";
+		case "total_size":
+			return "totalSize";
+		case "pack_size":
+			return "packSize";
+		case "product_id":
+			return "productId";
+
+		default:
+			return key as keyof IFilterKeysExtended;
+	}
+};
+
+export const updateKeyNames = (data: Array<IFilterKeysExtended>) => {
+	// loop over data and reformat key names
+	return data.map((item) => {
+		const newItem = {};
+		Object.keys(item).forEach((key) => {
+			newItem[reformatKeyNames(key)] = item[key];
+		});
+		return newItem;
+	});
+};
 
 function Table(): ReactElement {
 	const [products, setProducts] = useState<any[]>([]);
@@ -46,7 +79,6 @@ function Table(): ReactElement {
 		price: [],
 		promoPrice: [],
 		quantityStatus: [],
-
 		totalSize: [],
 	});
 
@@ -73,7 +105,9 @@ function Table(): ReactElement {
 				}
 			)
 			.then((response) => {
-				setProducts(response.data.products);
+				const updated = updateKeyNames(response.data.products);
+				setProducts(updated);
+
 				setMetadata(response.data.msg);
 				setLoading(false);
 			})
@@ -82,23 +116,21 @@ function Table(): ReactElement {
 			});
 	};
 
-	console.log(products);
-
 	const productKeyNames = {
-		// 'ID': "_id",
-		"Company Name": "company_name",
-		"Location ID": "location_id",
+		"Company Name": "companyName",
+		"Location ID": "locationId",
 		Brandname: "brandname",
-		"Variation Name": "variation_name",
-		// "Display Name": "displayname",
-		// "Product ID": "product_id",
-		// "Variation ID": "variationid",
-		"Total Size": "total_size",
-		"Pack Size": "pack_size",
+		"Variation Name": "variationName",
+		"Total Size": "totalSize",
+		"Pack Size": "packSize",
 		Price: "price",
-		// "Quantity Status": "quantityStatus",
 		"Promo Price": "promoPrice",
 		"Product Name": "productName",
+		// 'ID': "_id",
+		// "Display Name": "displayname",
+		// "Product ID": "productId",
+		// "Variation ID": "variationid",
+		// "Quantity Status": "quantityStatus",
 		// "Price Last Updated": "priceHistoryUpdatedAt",
 		// "Promo Price Last Updated": "promoPriceHistoryUpdatedAt",
 		// "Document Last Updated": "updatedAt",

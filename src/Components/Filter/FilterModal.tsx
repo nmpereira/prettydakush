@@ -119,7 +119,8 @@ function FilterModal(props: IFilterModal) {
 								) : (
 									<div className="text-center">
 										<p className="text-gray-500">
-											No filters available. Clear all filters or refresh the page.
+											No filters available. Clear all filters or refresh the
+											page.
 										</p>
 									</div>
 								)

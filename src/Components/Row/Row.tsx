@@ -18,7 +18,7 @@ export interface IRowProps {
 	priceHistory: object;
 	priceHistoryUpdatedAt: string;
 	productName: string;
-	product_id: string;
+	productId: string;
 	promoPrice: number;
 	promoPriceHistory: object;
 	promoPriceHistoryUpdatedAt: string;

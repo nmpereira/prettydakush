@@ -13,6 +13,13 @@ function CheckBox(props: any) {
 
 	const [checked, setChecked] = useState(false);
 
+	// console.log("filtersApplied", {
+	// 	filtersApplied,
+	// 	name,
+	// 	filter,
+	// 	filtersAppliedname: filtersApplied[name],
+	// });
+
 	useEffect(() => {
 		if (filtersApplied[name].includes(filter)) {
 			setChecked(true);

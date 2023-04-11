@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import FilterModal from "./FilterModal";
 import axios from "axios";
+import { updateKeyNames, reformatKeyNames } from "../Table/Table";
 
 export interface IFilterKeys {
 	brandname: Array<string>;
@@ -13,6 +14,28 @@ export interface IFilterKeys {
 	promoPrice: Array<string>;
 	quantityStatus: Array<string>;
 	totalSize: Array<string>;
+}
+
+export interface IFilterKeysExtended extends IFilterKeys {
+	brandname: Array<string>;
+	companyName: Array<string>;
+	locationAddress: Array<string>;
+	locationName: Array<string>;
+	locationId: Array<string>;
+	packSize: Array<string>;
+	price: Array<string>;
+	promoPrice: Array<string>;
+	quantityStatus: Array<string>;
+	totalSize: Array<string>;
+	displayName: string;
+	productId: string;
+	variationId: string;
+	priceHistoryUpdatedAt: string;
+	promoPriceHistoryUpdatedAt: string;
+	updatedAt: string;
+	createdAt: string;
+	variationName: string;
+	_id: string;
 }
 
 function Filter(props: any) {
@@ -51,7 +74,26 @@ function Filter(props: any) {
 		);
 		const { filters: filterResponse } = await res.data;
 
-		setFilters(filterResponse);
+		console.log(filterResponse);
+
+		// update filter key names using reformatKeyNames
+		const reformatFilterkeys = (data: any): IFilterKeys => {
+			// update the key names
+			const newKeys = {};
+			for (const key in Object.keys(data)) {
+				const newKey = reformatKeyNames(Object.keys(data)[key]);
+				newKeys[newKey] = data[Object.keys(data)[key]];
+			}
+
+			console.log({ newKeys });
+			return newKeys;
+		};
+
+		const updatedFilters = reformatFilterkeys(filterResponse);
+
+		console.log({ updatedFilters, filterResponse });
+
+		setFilters(updatedFilters);
 		setFiltersLoading(false);
 	};
 
