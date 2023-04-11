@@ -116,7 +116,7 @@ function Table(): ReactElement {
 					page={metadata.page}
 					setPage={setPage}
 					total_pages={metadata.total_pages}
-					total_products={metadata.sizeBeforeFilter}
+					totalProducts={metadata.sizeBeforeFilter}
 					loading={loading}
 				/>
 			</TableTopSpacer>
