@@ -24,13 +24,14 @@
     "semi": ["error", "always"],
     "react/react-in-jsx-scope": "off",
     "camelcase": "error",
-    "spaced-comment": "error",
+    "spaced-comment": "warn",
     "no-trailing-spaces": "error",
     "no-duplicate-imports": "error"
   },
   "settings": {
     "import/resolver": {
       "typescript": {}
-    }
+    },
+    "version": "detect"
   }
 }
