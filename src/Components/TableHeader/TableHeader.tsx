@@ -4,17 +4,16 @@ import { HeaderKeyWrapper, StyledTableHeader } from "./TableHeader.styles";
 import Filter from "../Filter/Filter";
 
 interface ITableHeaderProps {
-  keyNames: Array<string>;
-  loading: boolean;
-  setSortBy: (sortBy: string) => void;
-  setSortOrder: (sortOrder: string) => void;
-  sortBy: string;
-  sortOrder: string;
-  productKeyNames: Record<string, string>;
-  limit: number;
-  page: number;
-  search: string;
-
+	keyNames: Array<string>;
+	loading: boolean;
+	setSortBy: (sortBy: string) => void;
+	setSortOrder: (sortOrder: string) => void;
+	sortBy: string;
+	sortOrder: string;
+	productKeyNames: Record<string, string>;
+	limit: number;
+	page: number;
+	search: string;
 }
 
 function TableHeader(props: ITableHeaderProps): ReactElement {
@@ -24,11 +23,11 @@ function TableHeader(props: ITableHeaderProps): ReactElement {
 		sortOrder,
 		sortBy,
 	}: {
-    e: MouseEvent<HTMLElement>;
-    currentKey: string;
-    sortOrder: string;
-    sortBy: string;
-  }) => {
+		e: MouseEvent<HTMLElement>;
+		currentKey: string;
+		sortOrder: string;
+		sortBy: string;
+	}) => {
 		e.preventDefault();
 
 		if (currentKey === sortBy) {
@@ -56,7 +55,6 @@ function TableHeader(props: ITableHeaderProps): ReactElement {
 					)}
 				</th>
 				{props.keyNames.map((keyName, index) => {
-
 					return props.loading ? (
 						<th key={index}>
 							<progress className="progress progress-primary w-16"></progress>
@@ -67,7 +65,6 @@ function TableHeader(props: ITableHeaderProps): ReactElement {
 								<>
 									{keyName === "Price" ? (
 										<>
-
 											<HeaderKeyWrapper
 												onClick={(e) =>
 													handleSort({
@@ -108,7 +105,6 @@ function TableHeader(props: ITableHeaderProps): ReactElement {
 										</>
 									) : (
 										<>
-
 											<HeaderKeyWrapper
 												onClick={(e) =>
 													handleSort({
@@ -150,10 +146,6 @@ function TableHeader(props: ITableHeaderProps): ReactElement {
 								</>
 							) : (
 								<>
-
-
-
-
 									<HeaderKeyWrapper
 										onClick={(e) =>
 											handleSort({

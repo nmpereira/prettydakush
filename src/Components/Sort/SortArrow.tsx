@@ -4,13 +4,12 @@ import sortDown from "../../assets/sort-down.png";
 import { SortArrowWrapper } from "./SortArrow.styles";
 
 interface ISortArrowProps {
-  order: string;
-  sortBy: string;
-  currentProperty: string;
+	order: string;
+	sortBy: string;
+	currentProperty: string;
 }
 
 function SortArrow(props: ISortArrowProps) {
-
 	return (
 		<SortArrowWrapper>
 			{props.sortBy === props.currentProperty ? (

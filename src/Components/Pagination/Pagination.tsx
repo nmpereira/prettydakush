@@ -4,16 +4,16 @@ import ReactPaginate from "react-paginate";
 import { IRowProps } from "../Row/Row";
 
 interface IPaginationProps {
-  limit: number;
-  page: number;
-  setPage: (page: number) => void;
-  total_pages: number;
-  total_products: number;
-  loading: boolean;
+	limit: number;
+	page: number;
+	setPage: (page: number) => void;
+	total_pages: number;
+	total_products: number;
+	loading: boolean;
 }
 
 function Pagination(props: IPaginationProps): ReactElement {
-	const {loading,limit,total_products,setPage} = props;
+	const { loading, limit, total_products, setPage } = props;
 	const page_limit = Number(limit);
 	const total_count = Number(total_products);
 
@@ -21,7 +21,7 @@ function Pagination(props: IPaginationProps): ReactElement {
 
 	const endOffset = itemOffset + page_limit;
 
-	const pageCount = Math.ceil(total_count / page_limit)||0;
+	const pageCount = Math.ceil(total_count / page_limit) || 0;
 
 	const handlePageClick = (event: { selected: number }) => {
 		setPage(event.selected + 1);
@@ -29,12 +29,10 @@ function Pagination(props: IPaginationProps): ReactElement {
 
 	return (
 		<>
-
 			<ReactPaginate
 				breakLabel=". . . . ."
 				nextLabel="next >"
 				containerClassName={"btn-group"}
-
 				// activeClassName={"btn-active"}
 				activeLinkClassName={"btn-active link-primary"}
 				pageLinkClassName={"btn"}

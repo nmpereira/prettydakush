@@ -1,5 +1,3 @@
 import styled from "styled-components";
 
-export const Page = styled.button`
-
-`;
+export const Page = styled.button``;

@@ -8,34 +8,34 @@ import { KeyRow, RowWrapper } from "./Row.styles";
 dayjs.extend(relativeTime);
 
 export interface IRowProps {
-  brandname: string;
-  companyName: string;
-  createdAt: string;
-  displayname: string;
-  locationId: string;
-  packSize: string;
-  price: number;
-  priceHistory: object;
-  priceHistoryUpdatedAt: string;
-  productName: string;
-  product_id: string;
-  promoPrice: number;
-  promoPriceHistory: object;
-  promoPriceHistoryUpdatedAt: string;
-  quantityStatus: string;
-  totalSize: number;
-  updatedAt: string;
-  variation_name: string;
-  variationid: string;
-  _id: string;
-  productKeyNames: Array<string>;
-  keyNames: Array<string>;
-  valueNames: Array<string>;
-  index: number;
-  locationName: string;
-  locationAddress: string;
-  linkToStore: string;
-  linkToProduct: string;
+	brandname: string;
+	companyName: string;
+	createdAt: string;
+	displayname: string;
+	locationId: string;
+	packSize: string;
+	price: number;
+	priceHistory: object;
+	priceHistoryUpdatedAt: string;
+	productName: string;
+	product_id: string;
+	promoPrice: number;
+	promoPriceHistory: object;
+	promoPriceHistoryUpdatedAt: string;
+	quantityStatus: string;
+	totalSize: number;
+	updatedAt: string;
+	variation_name: string;
+	variationid: string;
+	_id: string;
+	productKeyNames: Array<string>;
+	keyNames: Array<string>;
+	valueNames: Array<string>;
+	index: number;
+	locationName: string;
+	locationAddress: string;
+	linkToStore: string;
+	linkToProduct: string;
 }
 
 type IRowWrapperProps = Omit<IRowProps, "promoPriceHistory" | "priceHistory">;
@@ -64,17 +64,14 @@ function RowComponent(props: IRowProps): ReactElement {
 				if (valueName === "price" || valueName === "promoPrice") {
 					const previousPriceArray = Object.entries(priceHistory).length;
 					const [previousDate, previousPrice] =
-            Object.entries(priceHistory)[
-            	previousPriceArray - (previousPriceArray === 1 ? 1 : 2)
-            ];
+						Object.entries(priceHistory)[previousPriceArray - (previousPriceArray === 1 ? 1 : 2)];
 
-					const previousPromoPriceArray =
-            Object.entries(promoPriceHistory).length;
+					const previousPromoPriceArray = Object.entries(promoPriceHistory).length;
 
 					const [previousDatePromo, previousPricePromo] =
-            Object.entries(promoPriceHistory)[
-            	previousPromoPriceArray - (previousPromoPriceArray === 1 ? 1 : 2)
-            ];
+						Object.entries(promoPriceHistory)[
+							previousPromoPriceArray - (previousPromoPriceArray === 1 ? 1 : 2)
+						];
 
 					if (valueName === "price") {
 						return (
@@ -127,9 +124,7 @@ function RowComponent(props: IRowProps): ReactElement {
 						<RowWrapper key={`${index}-comp_name`}>
 							<LinkCell
 								href={linkToStore}
-								text={`${
-									props[valueName as keyof IRowWrapperProps]
-								}-${locationName}`}
+								text={`${props[valueName as keyof IRowWrapperProps]}-${locationName}`}
 							/>
 						</RowWrapper>
 					);
@@ -137,23 +132,14 @@ function RowComponent(props: IRowProps): ReactElement {
 
 				if (valueName === "productName" || valueName === "variation_name") {
 					return (
-						<RowWrapper
-							key={`${index}-${
-								valueName === "productName" ? "prod_name" : "var_name"
-							}`}
-						>
-							<LinkCell
-								href={linkToProduct}
-								text={props[valueName as keyof IRowWrapperProps]}
-							/>
+						<RowWrapper key={`${index}-${valueName === "productName" ? "prod_name" : "var_name"}`}>
+							<LinkCell href={linkToProduct} text={props[valueName as keyof IRowWrapperProps]} />
 						</RowWrapper>
 					);
 				}
 
 				return (
-					<RowWrapper key={ind}>
-						{props[valueName as keyof IRowWrapperProps] || "N/A"}
-					</RowWrapper>
+					<RowWrapper key={ind}>{props[valueName as keyof IRowWrapperProps] || "N/A"}</RowWrapper>
 				);
 			})}
 		</tr>

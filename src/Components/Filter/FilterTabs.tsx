@@ -1,8 +1,6 @@
 function FilterTabs(props: any) {
 	const { filters, setTabSelected, filterCounters } = props;
 
-
-
 	return (
 		<>
 			<div className="tabs tabs-boxed">
@@ -28,9 +26,7 @@ function FilterTabs(props: any) {
 						{
 							// if tab has filters applied, show the number of filters applied
 							filterCounters[filter] > 0 ? (
-								<div className={"badge badge-xs badge-secondary"}>
-									{filterCounters[filter]}
-								</div>
+								<div className={"badge badge-xs badge-secondary"}>{filterCounters[filter]}</div>
 							) : null
 						}
 					</a>

@@ -19,13 +19,14 @@ function CheckBox(props: any) {
 		} else {
 			setChecked(false);
 		}
-
 	}, [checked, filterChange, clearFilters]);
 
-	useEffect(() => {updateFilterCounters();}, [checked]);
+	useEffect(() => {
+		updateFilterCounters();
+	}, [checked]);
 
 	return (
-		<div className="form-control" >
+		<div className="form-control">
 			<label className="cursor-pointer label">
 				<input
 					type="checkbox"
@@ -35,7 +36,6 @@ function CheckBox(props: any) {
 					ref={inputRef}
 					onChange={(e) => {
 						filterChange(e.target.checked, filter);
-
 					}}
 				/>
 				<span className="checkbox-mark"></span>

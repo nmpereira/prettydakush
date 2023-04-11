@@ -1,8 +1,8 @@
 import { Link } from "./Cell.styles";
 
 interface ILinkCellProps {
-  href: string;
-  text: string | number | string[];
+	href: string;
+	text: string | number | string[];
 }
 
 function LinkCell(props: ILinkCellProps) {

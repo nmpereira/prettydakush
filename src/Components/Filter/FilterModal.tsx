@@ -4,16 +4,16 @@ import CheckBox from "./Checkbox";
 import FilterTabs from "./FilterTabs";
 
 interface IFilterModal {
-  title: string;
-  clear: string;
-  apply: string;
-  body: IFilterKeys;
-  setFiltersApplied: (e: any) => void;
-  filtersApplied: IFilterKeys;
-  filterApply: () => void;
-  tabSelected: keyof IFilterKeys;
-  setTabSelected: (e: any) => void;
-  filtersLoading: boolean;
+	title: string;
+	clear: string;
+	apply: string;
+	body: IFilterKeys;
+	setFiltersApplied: (e: any) => void;
+	filtersApplied: IFilterKeys;
+	filterApply: () => void;
+	tabSelected: keyof IFilterKeys;
+	setTabSelected: (e: any) => void;
+	filtersLoading: boolean;
 }
 
 function FilterModal(props: IFilterModal) {
@@ -32,13 +32,13 @@ function FilterModal(props: IFilterModal) {
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const [filterCounters, setFilterCounters] = useState<{
-    [key in keyof IFilterKeys]: number;
-  }>(
-    Object.keys(body).reduce((acc: Record<any, any>, key) => {
-    	acc[key] = 0;
-    	return acc;
-    }, {}) as { [key in keyof IFilterKeys]: number }
-  );
+		[key in keyof IFilterKeys]: number;
+	}>(
+		Object.keys(body).reduce((acc: Record<any, any>, key) => {
+			acc[key] = 0;
+			return acc;
+		}, {}) as { [key in keyof IFilterKeys]: number }
+	);
 
 	const updateFilterCounters = () => {
 		const filterCountersCopy = JSON.parse(JSON.stringify(filterCounters));
@@ -51,11 +51,7 @@ function FilterModal(props: IFilterModal) {
 		setFilterCounters(filterCountersCopy);
 	};
 
-	const filterUpdate = (
-		value: boolean,
-		filter: string,
-		filtersApplied: IFilterKeys
-	) => {
+	const filterUpdate = (value: boolean, filter: string, filtersApplied: IFilterKeys) => {
 		const filerCopy = JSON.parse(JSON.stringify(filtersApplied));
 
 		if (value) {
@@ -107,8 +103,8 @@ function FilterModal(props: IFilterModal) {
 					<div className="overflow-x-auto max-h-52">
 						<div className="flex items-center justify-center p-4 flex-col">
 							{!filtersLoading ? (
-								(body &&
-                body[tabSelected]?.length) ? (                body[tabSelected].map((filter, index) => (
+								body && body[tabSelected]?.length ? (
+									body[tabSelected].map((filter, index) => (
 										<CheckBox
 											inputRef={inputRef}
 											key={`filter-${index}`}
@@ -119,15 +115,14 @@ function FilterModal(props: IFilterModal) {
 											clearFilters={clearFilters}
 											updateFilterCounters={updateFilterCounters}
 										/>
-									))) : (
-										<div className="text-center">
-											<p className="text-gray-500">
-                      No filters available. Clear all filters or refresh the page.
-											</p>
-										</div>
-
-									)
-
+									))
+								) : (
+									<div className="text-center">
+										<p className="text-gray-500">
+											No filters available. Clear all filters or refresh the page.
+										</p>
+									</div>
+								)
 							) : (
 								<progress className="progress progress-primary w-56"></progress>
 							)}

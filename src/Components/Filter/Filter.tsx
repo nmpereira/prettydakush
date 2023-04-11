@@ -29,8 +29,7 @@ function Filter(props: any) {
 		filterApply,
 	} = props;
 
-	const [tabSelected, setTabSelected] =
-		useState<keyof IFilterKeys>("brandname");
+	const [tabSelected, setTabSelected] = useState<keyof IFilterKeys>("brandname");
 
 	const [filtersLoading, setFiltersLoading] = useState(false);
 
@@ -41,7 +40,8 @@ function Filter(props: any) {
 	const getFilters = async () => {
 		setFiltersLoading(true);
 		const res = await axios.get(
-			`https://data.nmpereira.com/api/products/filters?limit=${limit}&page=${page}&sortBy=${sortBy}&sortOrder=${sortOrder}${search === "" ? "" : `&search=${search}`
+			`https://data.nmpereira.com/api/products/filters?limit=${limit}&page=${page}&sortBy=${sortBy}&sortOrder=${sortOrder}${
+				search === "" ? "" : `&search=${search}`
 			}`,
 			{
 				params: {
