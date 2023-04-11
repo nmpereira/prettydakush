@@ -11,19 +11,19 @@ interface ISortArrowProps {
 
 function SortArrow(props: ISortArrowProps) {
 
-  return (
-    <SortArrowWrapper>
-      {props.sortBy === props.currentProperty ? (
-        props.order === "asc" ? (
-          <img src={sortUp} alt="sort up" />
-        ) : (
-          <img src={sortDown} alt="sort down" />
-        )
-      ) : (
-        <img src={sortDisabled} alt="sort disabled" />
-      )}
-    </SortArrowWrapper>
-  );
+	return (
+		<SortArrowWrapper>
+			{props.sortBy === props.currentProperty ? (
+				props.order === "asc" ? (
+					<img src={sortUp} alt="sort up" />
+				) : (
+					<img src={sortDown} alt="sort down" />
+				)
+			) : (
+				<img src={sortDisabled} alt="sort disabled" />
+			)}
+		</SortArrowWrapper>
+	);
 }
 
 export default SortArrow;

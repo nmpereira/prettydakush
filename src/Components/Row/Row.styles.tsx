@@ -11,6 +11,6 @@ export const RowWrapper = styled.td`
 
 export const KeyRow = styled.th`
 
-`
+`;
 
 

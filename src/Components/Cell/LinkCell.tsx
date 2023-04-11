@@ -1,4 +1,3 @@
-import { RowWrapper } from "../Row/Row.styles";
 import { Link } from "./Cell.styles";
 
 interface ILinkCellProps {
@@ -7,11 +6,11 @@ interface ILinkCellProps {
 }
 
 function LinkCell(props: ILinkCellProps) {
-  return (
-    <Link href={props.href} target="_blank" rel="noreferrer">
-      {props.text}
-    </Link>
-  );
+	return (
+		<Link href={props.href} target="_blank" rel="noreferrer">
+			{props.text}
+		</Link>
+	);
 }
 
 export default LinkCell;
