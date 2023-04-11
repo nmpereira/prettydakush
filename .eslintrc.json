@@ -26,12 +26,15 @@
     "camelcase": "error",
     "spaced-comment": "warn",
     "no-trailing-spaces": "error",
-    "no-duplicate-imports": "error"
+    "no-duplicate-imports": "error",
+    "@typescript-eslint/ban-ts-comment": "warn"
   },
   "settings": {
     "import/resolver": {
       "typescript": {}
     },
-    "version": "detect"
+    "react": {
+      "version": "detect"
+    }
   }
 }
