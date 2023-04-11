@@ -27,7 +27,10 @@
     "spaced-comment": "warn",
     "no-trailing-spaces": "error",
     "no-duplicate-imports": "error",
-    "@typescript-eslint/ban-ts-comment": "warn"
+    "@typescript-eslint/ban-ts-comment": "warn",
+    "no-console": "warn",
+    "no-undef": "warn",
+    "no-unused-vars": "warn"
   },
   "settings": {
     "import/resolver": {
