@@ -58,6 +58,45 @@ function RowComponent(props: IRowProps): ReactElement {
     locationName,
   } = props;
 
+  const tooltipData = {
+    priceAth: Object.values(priceHistory).reduce((a, b) => Math.max(a, b)),
+    priceAtl: Object.values(priceHistory).reduce((a, b) => Math.min(a, b)),
+
+    priceAthDate: Object.keys(priceHistory).find(
+      (key) =>
+
+        priceHistory[key] ===
+        Object.values(priceHistory).reduce((a, b) => Math.max(a, b))
+    ),
+
+    priceAtlDate: Object.keys(priceHistory).find(
+      (key) =>
+
+        priceHistory[key] ===
+        Object.values(priceHistory).reduce((a, b) => Math.min(a, b))
+    ),
+
+    promoPriceAth: Object.values(promoPriceHistory).reduce((a, b) =>
+      Math.max(a, b)
+    ),
+    promoPriceAthDate: Object.keys(promoPriceHistory).find(
+      (key) =>
+
+        promoPriceHistory[key] ===
+        Object.values(promoPriceHistory).reduce((a, b) => Math.max(a, b))
+    ),
+    promoPriceAtlDate: Object.keys(promoPriceHistory).find(
+      (key) =>
+
+        promoPriceHistory[key] ===
+        Object.values(promoPriceHistory).reduce((a, b) => Math.min(a, b))
+    ),
+
+    promoPriceAtl: Object.values(promoPriceHistory).reduce((a, b) =>
+      Math.min(a, b)
+    ),
+  };
+
   return (
     <tr>
       <KeyRow>{index}</KeyRow>
@@ -87,6 +126,10 @@ function RowComponent(props: IRowProps): ReactElement {
                 date={dayjs(priceHistoryUpdatedAt)}
                 previous_price={parseFloat(previous_price)}
                 previous_date={dayjs(Number(previous_date))}
+                ath={tooltipData.priceAth}
+                atl={tooltipData.priceAtl}
+                dateAth={tooltipData.priceAthDate}
+                dateAtl={tooltipData.priceAtlDate}
               />
             );
           }
@@ -100,6 +143,10 @@ function RowComponent(props: IRowProps): ReactElement {
                 date={dayjs(promoPriceHistoryUpdatedAt)}
                 previous_price={parseFloat(previous_price_promo)}
                 previous_date={dayjs(Number(previous_date_promo))}
+                ath={tooltipData.promoPriceAth}
+                atl={tooltipData.promoPriceAtl}
+                dateAth={tooltipData.promoPriceAthDate}
+                dateAtl={tooltipData.promoPriceAtlDate}
               />
             );
           }

@@ -17,6 +17,7 @@
     "react-debounce-input": "^3.3.0",
     "react-dom": "^18.2.0",
     "react-paginate": "^8.1.4",
+    "react-tooltip": "^5.11.1",
     "styled-components": "^5.3.9"
   },
   "devDependencies": {
